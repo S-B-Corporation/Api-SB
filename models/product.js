@@ -6,6 +6,10 @@ const productSchema = new mongoose.Schema({
     descripcion: String,
     precio: Number,
     numerodecontacto: String,
+    categoria: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Categoria'
+    },
     idcliente: String,
   });
   
