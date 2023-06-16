@@ -8,7 +8,9 @@ const emailExist = async (email = "") => {
     throw new Error(`Email: ${email} Already exist in the database`);
   }
 };
-
+ 
 module.exports = {
-  emailExist,
+  emailExist,
 };
+
+
