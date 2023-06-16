@@ -1,11 +1,12 @@
 const express = require('express');
 const app = express();
 const mongoose = require("mongoose")
+require('dotenv').config();
 const router = express.Router();
-const PORT = 8080;
+const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
+const PORT = process.env.PORT || 8080;
 
-
-mongoose.connect('mongodb+srv://mcmp2023:sybmarketplace@clustersybmarketplace.nhtcitw.mongodb.net/sybmarketplace?retryWrites=true&w=majority', {
+mongoose.connect(DB_CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -16,10 +17,10 @@ mongoose.connect('mongodb+srv://mcmp2023:sybmarketplace@clustersybmarketplace.nh
     console.error('Error al conectar a la base de datos', error);
   });
 
-app.use(express.json())
+app.use(express.json());
 app.use(require("./routes/routes"));
 
-app.listen(PORT, () => console.log("corriendo en el puerto" + PORT))
+app.listen(PORT, () => console.log("corriendo en el puerto " + PORT));
 
 
 
