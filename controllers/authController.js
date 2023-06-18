@@ -47,7 +47,13 @@ const login = async (req, res) => {
     // Actualizar el campo isWhitelisted a true
     await Token.updateOne({ token: token }, { isWhitelisted: true });
 
-    res.status(200).json({ message: 'Inicio de sesión exitoso', token });
+   
+    let message = 'Inicio de sesión exitoso';
+    if (cliente.role === 'admin') {
+      message += ' como administrador';
+    }
+
+    res.status(200).json({ message, token });
   } catch (error) {
     res.status(500).send('Error en el servidor');
   }
@@ -55,10 +61,10 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   try {
-    const { name, password, email } = req.body;
+    const { name, password, email, role } = req.body;
     await emailExist(email);
     // Crear el nuevo usuario
-    const cliente = new User({ name, password, email });
+    const cliente = new User({ name, password, email, role });
 
     const salt = bcrypt.genSaltSync();
     cliente.password = bcrypt.hashSync(password, salt);
